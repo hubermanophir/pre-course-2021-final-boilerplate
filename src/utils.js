@@ -56,6 +56,8 @@ function updateList() {
 
 //Empties the Jsonbin.io json
 function emptyJsonbin() {
+  spinner.hidden = false;
+
   fetch("https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce", {
     method: "PUT",
     headers: {
@@ -64,7 +66,10 @@ function emptyJsonbin() {
         "$2b$10$5P7RliLTaANiyqYHfkRvWepKYlCjfoARhVbWxxlqCTwQexhfzjuES",
     },
     body: JSON.stringify({ "my-todo": [] }),
+  }).then(()=>{
+    spinner.hidden = true;
   });
+
 }
 
 // //When the page is loaded its content is taken from jsonbin.io and updates the localStorage
