@@ -3,6 +3,7 @@ const containers = document.getElementsByClassName("todo-container");
 const darkMode = document.getElementById("dark-mode");
 const regular = document.getElementById("regular-mode");
 const style = document.getElementById("style");
+const spinner = document.getElementById("spinner-img");
 
 //Switch to dark mode on click
 darkMode.addEventListener("click", (e) => {
@@ -68,10 +69,12 @@ document.addEventListener("click", (e) => {
 //Removes the divs resets the counter and empties jsonbin.io + localStorage
 document.addEventListener("click", (e) => {
   if (e.target.id === "delete-all") {
-    deleteAllDivs();
-    emptyJsonbin();
-    counter.innerText = 0;
-    todoList = [];
+    if (confirm("Are you sure you want to delete all items?")) {
+      deleteAllDivs();
+      emptyJsonbin();
+      counter.innerText = 0;
+      todoList = [];
+    }
   }
 });
 
@@ -82,19 +85,6 @@ function deleteAllDivs() {
   while (viewSection.firstChild) {
     viewSection.removeChild(viewSection.firstChild);
   }
-}
-
-//Empties the Jsonbin.io json
-async function emptyJsonbin() {
-  await fetch("https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Master-Key":
-        "$2b$10$5P7RliLTaANiyqYHfkRvWepKYlCjfoARhVbWxxlqCTwQexhfzjuES",
-    },
-    body: JSON.stringify({ "my-todo": [] }),
-  });
 }
 
 //Gets an array, filter property and property value. Returns an array without that value
