@@ -45,6 +45,7 @@ Once the check mark appears the user can change the "To Do" item name by *double
 
 6. To the left, my social account links : Instagram, Github, Codepan and my daily Spotify mix, highly recommended.
 
+7. Every time the app fetches data a loading gif appears on the screen. When the fetch ends the gif will disappear.
 <br>
 
 ## sources 
