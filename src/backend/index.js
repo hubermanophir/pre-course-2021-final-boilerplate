@@ -11,12 +11,16 @@ app.get('/b', (req, res) => {
 
 //gets a specific task
 app.get('/b/:id', (req, res) => {
-	const id = req.params.id;
-	for (const item of todoItems) {
-		if (item.id === id) {
-			res.send(item);
-		}
-	}
+	const id = parseInt(req.params.id);
+	// res.send(console.log(todoItems));
+    res.send(todoItems.filter(item => item.id === id));
+    // for (const item of todoItems) {
+    //     if (item.id === id) {
+    //         res.send(console.log(item.id))
+    //     } else {
+    //         res.send("fail");
+    //     }
+	// }
 });
 
 //pushes a json 
