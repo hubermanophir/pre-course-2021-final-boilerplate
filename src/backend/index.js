@@ -31,6 +31,7 @@ app.put("/b/:id", (req, res) => {
   }
 });
 
+//deletes an item using id
 app.delete("/b/:id", (req, res) => {
   const id = parseInt(req.params.id);
   for (let i = 0; i < todoItems.length; i++) {
