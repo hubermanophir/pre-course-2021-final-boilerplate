@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 app.use(express.json());
+const todoItems = require('./todoItems.json');
+
 
 //gets all the tasks
 app.get('/b', (req, res) => {
@@ -10,7 +12,7 @@ app.get('/b', (req, res) => {
 //gets a specific task
 app.get('/b/:id', (req, res) => {
 	const id = req.params.id;
-	for (const item of items) {
+	for (const item of todoItems) {
 		if (item.id === id) {
 			res.send(item);
 		}
