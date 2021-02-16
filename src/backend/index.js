@@ -3,42 +3,43 @@ const app = express();
 app.use(express.json());
 
 //gets all the tasks
-app.get('/tasks', (req, res) => {
-	res.send(tasks);
+app.get('/b', (req, res) => {
+	res.send(todoItems);
 });
 
 //gets a specific task
-app.get('/tasks/:id', (req, res) => {
+app.get('/b/:id', (req, res) => {
 	const id = req.params.id;
-
-	for (const task of tasks) {
-		if (task.id === id) {
-			res.send(task);
+	for (const item of items) {
+		if (item.id === id) {
+			res.send(item);
 		}
 	}
 });
 
 //pushes a json 
-app.post('/tasks', (req, res) => {
+app.post('/b', (req, res) => {
     tasks.push(req.body);
     res.send(req.body);
 });
 
 
 //updates an object
-app.put('/tasks', (req, res) => {
-    for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === req.body.id) {
-            tasks[i] = req.body;
+app.put('/b/:id', (req, res) => {
+    const id = req.params.id;
+    for (let i = 0; i < todoItems.length; i++) {
+        if (todoItems[i].id === id) {
+            todoItems[i] = req.body;
             res.send(req.body);
         } 
     }
 });
 
-app.delete('/tasks', (req, res) => {
-    for (let i = 0; i < tasks.length; i++) {
-        if (tasks[i].id === req.body.id) {
-            tasks.splice(i,1);
+app.delete('/b/:id', (req, res) => {
+    const id = req.params.id;
+    for (let i = 0; i < todoItems.length; i++) {
+        if (todoItems[i].id === id) {
+            todoItems.splice(i,1);
             res.send('removed');
         } 
     }
