@@ -19,7 +19,7 @@ app.get('/b/:id', (req, res) => {
 
 //pushes a json 
 app.post('/b', (req, res) => {
-    tasks.push(req.body);
+    todoItems.push(req.body);
     res.send(req.body);
 });
 
@@ -44,3 +44,5 @@ app.delete('/b/:id', (req, res) => {
         } 
     }
 });
+
+app.listen(3000);
