@@ -12,15 +12,7 @@ app.get('/b', (req, res) => {
 //gets a specific task
 app.get('/b/:id', (req, res) => {
 	const id = parseInt(req.params.id);
-	// res.send(console.log(todoItems));
     res.send(todoItems.filter(item => item.id === id));
-    // for (const item of todoItems) {
-    //     if (item.id === id) {
-    //         res.send(console.log(item.id))
-    //     } else {
-    //         res.send("fail");
-    //     }
-	// }
 });
 
 //pushes a json 
@@ -32,7 +24,7 @@ app.post('/b', (req, res) => {
 
 //updates an object
 app.put('/b/:id', (req, res) => {
-    const id = req.params.id;
+    const id = parseInt(req.params.id);
     for (let i = 0; i < todoItems.length; i++) {
         if (todoItems[i].id === id) {
             todoItems[i] = req.body;
