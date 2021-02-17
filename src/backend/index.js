@@ -10,10 +10,10 @@ const uuid = require("uuid");
 app.post("/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
-  if ((Object.keys(body).length) === 0) {
+  if (Object.keys(body).length === 0) {
     res.status(400).send(`{
       "message": "Bin cannot be blank"
-    }`)
+    }`);
   } else {
     body.id = id;
     fs.writeFile(

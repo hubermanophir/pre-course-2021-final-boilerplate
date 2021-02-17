@@ -20,10 +20,8 @@ document.addEventListener("DOMContentLoaded", (e) => {
     const jsonResponse = res.json();
     jsonResponse
       .then((json) => {
-        // console.log(json);
         jsonList = json;
         todoList = jsonList["my-todo"];
-        // console.log(todoList);
         counter.innerText = todoList.length;
         localStorage.setItem("my-todo", JSON.stringify(todoList));
         arrayToDiv(todoList);
