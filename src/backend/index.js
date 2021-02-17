@@ -11,24 +11,30 @@ app.post("/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
   body.id = id;
-  fs.writeFile(
-    `./src/backend/database/${id}.json`,
-    JSON.stringify(body, null, 4),
-    (err) => {
-      if (err) {
-        res.send("error" + err);
-      } else {
-        res.send(body);
+  if (body) {
+    res.status(400).send(`{
+      "message": "Bin cannot be blank"
+    }`)
+  } else {
+    fs.writeFile(
+      `./src/backend/database/${id}.json`,
+      JSON.stringify(body, null, 4),
+      (err) => {
+        if (err) {
+          res.send("error");
+        } else {
+          res.send(body);
+        }
       }
-    }
-  );
+    );
+  }
 });
 
 //get file with using the id
 app.get("/b/:id", (req, res) => {
   fs.readFile(`./src/backend/database/${req.params.id}.json`, (err, data) => {
     if (err) {
-      res.send("error"+ err);
+      res.send("error");
     } else {
       res.send(data);
     }
@@ -44,7 +50,7 @@ app.put("/b/:id", (req, res) => {
     JSON.stringify(body, null, 4),
     (err) => {
       if (err) {
-        res.send("error" + err);
+        res.send("error");
       } else {
         res.send(body);
       }
@@ -56,7 +62,7 @@ app.put("/b/:id", (req, res) => {
 app.delete("/b/:id", (req, res) => {
   fs.unlink(`./src/backend/database/${req.params.id}.json`, (err) => {
     if (err) {
-      res.send("error!" + err);
+      res.send("error!");
     } else {
       res.send("success!");
     }
@@ -77,7 +83,7 @@ app.get('/b', (req, res) => {
     }
     res.send(arr);
     } catch (error) {
-      res.send('error'+error);
+      res.send('error'+er);
     }
     
   }
