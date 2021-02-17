@@ -33,8 +33,8 @@ app.post("/b", (req, res) => {
 //get file with using the id
 app.get("/b/:id", (req, res) => {
   if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
-    res.status(404).send(`{
-      "message": "bin not found"
+    res.status(400).send(`{
+      "message": "Invalid Bin Id provided"
     }`);
   } else {
     fs.readFile(`./src/backend/database/${req.params.id}.json`, (err, data) => {
