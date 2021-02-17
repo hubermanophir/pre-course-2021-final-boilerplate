@@ -11,14 +11,14 @@ app.post("/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
   body.id = id;
-  if (body) {
+  if (body === "") {
     res.status(400).send(`{
       "message": "Bin cannot be blank"
     }`)
   } else {
     fs.writeFile(
       `./src/backend/database/${id}.json`,
-      JSON.stringify(body, null, 4),
+      JSON.strinify(body, null, 4),
       (err) => {
         if (err) {
           res.status(500).send("error "+err);
