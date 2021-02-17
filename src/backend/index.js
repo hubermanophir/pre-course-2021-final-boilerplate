@@ -21,7 +21,7 @@ app.post("/b", (req, res) => {
       JSON.stringify(body, null, 4),
       (err) => {
         if (err) {
-          res.send("error");
+          res.status(500).send("error "+err);
         } else {
           res.send(body);
         }
@@ -32,41 +32,59 @@ app.post("/b", (req, res) => {
 
 //get file with using the id
 app.get("/b/:id", (req, res) => {
-  fs.readFile(`./src/backend/database/${req.params.id}.json`, (err, data) => {
-    if (err) {
-      res.send("error");
-    } else {
-      res.send(data);
-    }
-  });
+  if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
+    res.status(404).send(`{
+      "message": "bin not found"
+    }`)
+  } else {
+    fs.readFile(`./src/backend/database/${req.params.id}.json`, (err, data) => {
+      if (err) {
+        res.status(500).send("error" + err);
+      } else {
+        res.send(data);
+      }
+    });
+  }
 });
 
 //updates task by its id
 app.put("/b/:id", (req, res) => {
   const { body } = req;
   body.id = req.params.id;
-  fs.writeFile(
-    `./src/backend/database/${req.params.id}.json`,
-    JSON.stringify(body, null, 4),
-    (err) => {
-      if (err) {
-        res.send("error");
-      } else {
-        res.send(body);
+  if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
+    res.status(404).send(`{
+      "message": "Bin not found"
+    }`)
+  } else {
+    fs.writeFile(
+      `./src/backend/database/${req.params.id}.json`,
+      JSON.stringify(body, null, 4),
+      (err) => {
+        if (err) {
+          res.status(500).send("error" + err);
+        } else {
+          res.send(body);
+        }
       }
-    }
-  );
+    );
+  }
 });
 
 //deletes an item using the id
 app.delete("/b/:id", (req, res) => {
-  fs.unlink(`./src/backend/database/${req.params.id}.json`, (err) => {
-    if (err) {
-      res.send("error!");
-    } else {
-      res.send("success!");
-    }
-  });
+  if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
+    res.status(401).send(`{
+      "message": "Bin not found or it doesn't belong to your account"
+    }`)
+  } else {
+    fs.unlink(`./src/backend/database/${req.params.id}.json`, (err) => {
+      if (err) {
+        res.status(500).send("error" + err);
+      } else {
+        res.send("success!");
+      }
+    });
+  }
 });
 
 // gets the array of all the objects in the database folder
