@@ -6,9 +6,6 @@ const PORT = 3000;
 const fs = require("fs");
 const uuid = require("uuid");
 
-
-
-
 //create file with the corresponding id as name
 app.post("/b", (req, res) => {
   const { body } = req;
@@ -65,25 +62,6 @@ app.delete("/b/:id", (req, res) => {
     }
   });
 });
-
-// app.get('/b', (req, res) => {
-//   const objects = getAllDirFiles("./src/backend/database");
-//   const arr = [];
-//   for (const object of objects) {
-//       fs.readFile(`./src/backend/database/${object}`, (err, data) => {
-//         if (err) {
-//           res.send('error!')
-//         } else {
-//           // console.log(JSON.parse(data))
-//           // res.send(JSON.parse(data));
-//           const parsed = JSON.parse(data);
-//           arr.push(parsed);
-//           console.log(arr);
-//         }
-//       })
-//   }
-//   res.send(arr);
-// })
 
 //gets the array of all the objects in the database folder
 app.get('/b', (req, res) => {
