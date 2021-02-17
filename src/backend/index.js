@@ -69,62 +69,41 @@ app.delete("/b/:id", (req, res) => {
 // app.get('/b', (req, res) => {
 //   const objects = getAllDirFiles("./src/backend/database");
 //   const arr = [];
-//   objects.forEach(file => {
-//     fs.readFile(`./src/backend/database/${file}` , (err, data) => {
-//       if (err) {
-//         res.send('Error!')
-//       } else {
-//         arr.push(JSON.parse(data));
-//       }
-//     })
-//   });
-//   res.send(arr);
-// })
-
-app.get('/b', (req, res) => {
-  const objects = getAllDirFiles("./src/backend/database");
-  const arr = [];
-  for (const object of objects) {
-      fs.readFile(`./src/backend/database/${object}`, (err, data) => {
-        if (err) {
-          res.send('error!')
-        } else {
-          // console.log(JSON.parse(data))
-          // res.send(JSON.parse(data));
-          const parsed = JSON.parse(data);
-          arr.push(parsed);
-          console.log(arr);
-        }
-      })
-  }
-  res.send(arr);
-})
-
-// app.get('/b', (req, res) => {
-//   const objects = getAllDirFiles("./src/backend/database");
-//   const arr = [];
 //   for (const object of objects) {
-//       const obj = fs.readFileSync(`./src/backend/database/${object}`)
-//       arr.push(JSON.parse(obj));
+//       fs.readFile(`./src/backend/database/${object}`, (err, data) => {
+//         if (err) {
+//           res.send('error!')
+//         } else {
+//           // console.log(JSON.parse(data))
+//           // res.send(JSON.parse(data));
+//           const parsed = JSON.parse(data);
+//           arr.push(parsed);
+//           console.log(arr);
+//         }
+//       })
 //   }
 //   res.send(arr);
 // })
 
-const getAllDirFiles = function(dirPath, arrayOfFiles) {
-  files = fs.readdirSync(dirPath)
-
-  arrayOfFiles = arrayOfFiles || []
-
-  files.forEach(function(file) {
-    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-      arrayOfFiles = getAllDirFiles(dirPath + "/" + file, arrayOfFiles)
-    } else {
-      arrayOfFiles.push(file)
+//gets the array of all the objects in the database folder
+app.get('/b', (req, res) => {
+  const objects = fs.readdirSync("./src/backend/database");
+  const arr = [];
+  if (objects.length === 0) {
+      res.send('you have no objects')
+  } else {
+    try {
+      for (const object of objects) {
+        const obj = fs.readFileSync(`./src/backend/database/${object}`)
+        arr.push(JSON.parse(obj));
     }
-  })
-
-  return arrayOfFiles
-}
+    res.send(arr);
+    } catch (error) {
+      res.send('error'+error);
+    }
+    
+  }
+})
 
 app.listen(PORT);
 console.log(`listening on port: ${PORT}`);
