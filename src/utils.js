@@ -19,14 +19,16 @@ document.addEventListener("DOMContentLoaded", (e) => {
   resPromise.then((res)=> {
     const jsonResponse = res.json();
     jsonResponse.then((json)=> {
-      console.log(json);
+      // console.log(json);
       jsonList = json;
       todoList = jsonList["my-todo"];
-      console.log(todoList);
+      // console.log(todoList);
       counter.innerText = todoList.length;
       localStorage.setItem("my-todo", JSON.stringify(todoList));
       arrayToDiv(todoList);
       spinner.hidden = true;
+    }).catch((err) =>{
+      console.log(jsonList.message);
     })
   })
 });
@@ -49,7 +51,7 @@ function updateList() {
       spinner.hidden = true;
     })
     .catch((error) => {
-      console.error("Error:", jsonList);
+      console.error("Error:", error);
       spinner.hidden = true;
     });
 }
