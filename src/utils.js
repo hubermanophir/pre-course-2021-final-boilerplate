@@ -16,21 +16,23 @@ async function setPersistent(key, data) {
 document.addEventListener("DOMContentLoaded", (e) => {
   spinner.hidden = false;
   const resPromise = fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce");
-  resPromise.then((res)=> {
+  resPromise.then((res) => {
     const jsonResponse = res.json();
-    jsonResponse.then((json)=> {
-      // console.log(json);
-      jsonList = json;
-      todoList = jsonList["my-todo"];
-      // console.log(todoList);
-      counter.innerText = todoList.length;
-      localStorage.setItem("my-todo", JSON.stringify(todoList));
-      arrayToDiv(todoList);
-      spinner.hidden = true;
-    }).catch((err) =>{
-      console.log(jsonList.message);
-    })
-  })
+    jsonResponse
+      .then((json) => {
+        // console.log(json);
+        jsonList = json;
+        todoList = jsonList["my-todo"];
+        // console.log(todoList);
+        counter.innerText = todoList.length;
+        localStorage.setItem("my-todo", JSON.stringify(todoList));
+        arrayToDiv(todoList);
+        spinner.hidden = true;
+      })
+      .catch((err) => {
+        console.log(jsonList.message);
+      });
+  });
 });
 
 //Updates the list and sends a success/error in console log
@@ -68,7 +70,7 @@ function emptyJsonbin() {
         "$2b$10$5P7RliLTaANiyqYHfkRvWepKYlCjfoARhVbWxxlqCTwQexhfzjuES",
     },
     body: JSON.stringify({ "my-todo": [] }),
-  }).then(()=>{
+  }).then(() => {
     spinner.hidden = true;
   });
 }
