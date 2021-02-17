@@ -69,7 +69,6 @@ function emptyJsonbin() {
   }).then(()=>{
     spinner.hidden = true;
   });
-
 }
 
 // //When the page is loaded its content is taken from jsonbin.io and updates the localStorage
