@@ -63,7 +63,7 @@ app.delete("/b/:id", (req, res) => {
   });
 });
 
-//gets the array of all the objects in the database folder
+// gets the array of all the objects in the database folder
 app.get('/b', (req, res) => {
   const objects = fs.readdirSync("./src/backend/database");
   const arr = [];
@@ -77,7 +77,7 @@ app.get('/b', (req, res) => {
     }
     res.send(arr);
     } catch (error) {
-      res.send('error'+error);
+      res.send('error'+er);
     }
     
   }
