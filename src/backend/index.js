@@ -14,7 +14,11 @@ app.post("/b", (req, res) => {
 
 //get file with using the id
 app.get("/b/:id", (req, res) => {
-  res.json(fs.readFileSync(`./database/${req.params.id}.json`));
+  try {
+    res.send(fs.readFileSync(`./database/${req.params.id}.json`));
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 app.listen(PORT);
