@@ -15,14 +15,14 @@ async function setPersistent(key, data) {
 //When the page is loaded its content is taken from jsonbin.io and updates the localStorage
 document.addEventListener("DOMContentLoaded", (e) => {
   spinner.hidden = false;
-  const resPromise = fetch("https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce/latest");
-  
+  const resPromise = fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce");
   resPromise.then((res)=> {
     const jsonResponse = res.json();
     jsonResponse.then((json)=> {
-      const objectResponse = json["record"];
-      jsonList = objectResponse;
+      console.log(json);
+      jsonList = json;
       todoList = jsonList["my-todo"];
+      console.log(todoList);
       counter.innerText = todoList.length;
       localStorage.setItem("my-todo", JSON.stringify(todoList));
       arrayToDiv(todoList);
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
 //Updates the list and sends a success/error in console log
 function updateList() {
   spinner.hidden = false;
-  fetch("https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce", {
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -58,7 +58,7 @@ function updateList() {
 function emptyJsonbin() {
   spinner.hidden = false;
 
-  fetch("https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce", {
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
