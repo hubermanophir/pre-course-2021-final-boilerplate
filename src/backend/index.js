@@ -10,18 +10,18 @@ const uuid = require("uuid");
 app.post("/b", (req, res) => {
   const { body } = req;
   const id = uuid.v4();
-  body.id = id;
-  if (body === "") {
+  if ((Object.keys(body).length) === 0) {
     res.status(400).send(`{
       "message": "Bin cannot be blank"
     }`)
   } else {
+    body.id = id;
     fs.writeFile(
       `./src/backend/database/${id}.json`,
-      JSON.strinify(body, null, 4),
+      JSON.stringify(body, null, 4),
       (err) => {
         if (err) {
-          res.status(500).send("error "+err);
+          res.status(500).send("error " + err);
         } else {
           res.send(body);
         }
@@ -35,7 +35,7 @@ app.get("/b/:id", (req, res) => {
   if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
     res.status(404).send(`{
       "message": "bin not found"
-    }`)
+    }`);
   } else {
     fs.readFile(`./src/backend/database/${req.params.id}.json`, (err, data) => {
       if (err) {
@@ -54,7 +54,7 @@ app.put("/b/:id", (req, res) => {
   if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
     res.status(404).send(`{
       "message": "Bin not found"
-    }`)
+    }`);
   } else {
     fs.writeFile(
       `./src/backend/database/${req.params.id}.json`,
@@ -75,7 +75,7 @@ app.delete("/b/:id", (req, res) => {
   if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
     res.status(401).send(`{
       "message": "Bin not found or it doesn't belong to your account"
-    }`)
+    }`);
   } else {
     fs.unlink(`./src/backend/database/${req.params.id}.json`, (err) => {
       if (err) {
@@ -88,24 +88,23 @@ app.delete("/b/:id", (req, res) => {
 });
 
 // gets the array of all the objects in the database folder
-app.get('/b', (req, res) => {
+app.get("/b", (req, res) => {
   const objects = fs.readdirSync("./src/backend/database");
   const arr = [];
   if (objects.length === 0) {
-      res.send('you have no objects')
+    res.send("you have no objects");
   } else {
     try {
       for (const object of objects) {
-        const obj = fs.readFileSync(`./src/backend/database/${object}`)
+        const obj = fs.readFileSync(`./src/backend/database/${object}`);
         arr.push(JSON.parse(obj));
-    }
-    res.send(arr);
+      }
+      res.send(arr);
     } catch (error) {
-      res.send('error'+er);
+      res.send("error" + er);
     }
-    
   }
-})
+});
 
 app.listen(PORT);
 console.log(`listening on port: ${PORT}`);
