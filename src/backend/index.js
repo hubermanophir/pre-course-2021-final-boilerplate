@@ -1,9 +1,13 @@
+const { json } = require("express");
 const express = require("express");
 const app = express();
 app.use(express.json());
 const PORT = 3000;
 const fs = require("fs");
 const uuid = require("uuid");
+
+
+
 
 //create file with the corresponding id as name
 app.post("/b", (req, res) => {
@@ -61,6 +65,66 @@ app.delete("/b/:id", (req, res) => {
     }
   });
 });
+
+// app.get('/b', (req, res) => {
+//   const objects = getAllDirFiles("./src/backend/database");
+//   const arr = [];
+//   objects.forEach(file => {
+//     fs.readFile(`./src/backend/database/${file}` , (err, data) => {
+//       if (err) {
+//         res.send('Error!')
+//       } else {
+//         arr.push(JSON.parse(data));
+//       }
+//     })
+//   });
+//   res.send(arr);
+// })
+
+app.get('/b', (req, res) => {
+  const objects = getAllDirFiles("./src/backend/database");
+  const arr = [];
+  for (const object of objects) {
+      fs.readFile(`./src/backend/database/${object}`, (err, data) => {
+        if (err) {
+          res.send('error!')
+        } else {
+          // console.log(JSON.parse(data))
+          // res.send(JSON.parse(data));
+          const parsed = JSON.parse(data);
+          arr.push(parsed);
+          console.log(arr);
+        }
+      })
+  }
+  res.send(arr);
+})
+
+// app.get('/b', (req, res) => {
+//   const objects = getAllDirFiles("./src/backend/database");
+//   const arr = [];
+//   for (const object of objects) {
+//       const obj = fs.readFileSync(`./src/backend/database/${object}`)
+//       arr.push(JSON.parse(obj));
+//   }
+//   res.send(arr);
+// })
+
+const getAllDirFiles = function(dirPath, arrayOfFiles) {
+  files = fs.readdirSync(dirPath)
+
+  arrayOfFiles = arrayOfFiles || []
+
+  files.forEach(function(file) {
+    if (fs.statSync(dirPath + "/" + file).isDirectory()) {
+      arrayOfFiles = getAllDirFiles(dirPath + "/" + file, arrayOfFiles)
+    } else {
+      arrayOfFiles.push(file)
+    }
+  })
+
+  return arrayOfFiles
+}
 
 app.listen(PORT);
 console.log(`listening on port: ${PORT}`);
