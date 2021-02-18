@@ -35,6 +35,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     })
     .catch((err) => {
       spinner.hidden = true;
+      errorDiv.hidden =false;
       console.error(err);
     });
 });

@@ -4,6 +4,7 @@ const darkMode = document.getElementById("dark-mode");
 const regular = document.getElementById("regular-mode");
 const style = document.getElementById("style");
 const spinner = document.getElementById("spinner-img");
+const errorDiv = document.getElementById("error");
 
 //Switch to dark mode on click
 darkMode.addEventListener("click", (e) => {

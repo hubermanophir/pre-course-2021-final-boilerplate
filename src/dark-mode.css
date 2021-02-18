@@ -304,6 +304,7 @@ h1 {
   margin-left: auto;
   z-index: 1;
 }
+
 @media (max-width: 600px) {
   #text-input {
     height: 2em;
