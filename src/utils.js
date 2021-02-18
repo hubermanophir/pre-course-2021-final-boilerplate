@@ -29,6 +29,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
       })
       .catch((err) => {
         console.log(jsonList.message);
+        spinner.hidden = true;
       });
   });
 });
