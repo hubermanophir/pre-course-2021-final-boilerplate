@@ -17,23 +17,26 @@ async function setPersistent(key, data) {
 //When the page is loaded its content is taken from jsonbin.io and updates the localStorage
 document.addEventListener("DOMContentLoaded", (e) => {
   spinner.hidden = false;
-  const resPromise = fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce");
-  resPromise.then((res) => {
-    const jsonResponse = res.json();
-    jsonResponse
-      .then((json) => {
-        jsonList = json;
-        todoList = jsonList["my-todo"];
-        counter.innerText = todoList.length;
-        localStorage.setItem("my-todo", JSON.stringify(todoList));
-        arrayToDiv(todoList);
-        spinner.hidden = true;
-      })
-      ;
-  }).catch((err) => {
-    console.log(jsonList.message);
-    spinner.hidden = true;
-  });
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce")
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Failed to fetch local host error:"+ res.status);
+      }
+    })
+    .then((json) => {
+      jsonList = json;
+      todoList = jsonList["my-todo"];
+      counter.innerText = todoList.length;
+      localStorage.setItem("my-todo", JSON.stringify(todoList));
+      arrayToDiv(todoList);
+      spinner.hidden = true;
+    })
+    .catch((err) => {
+      spinner.hidden = true;
+      console.error(err);
+    });
 });
 
 //Updates the list and sends a success/error in console log
@@ -48,16 +51,20 @@ function updateList() {
     },
     body: JSON.stringify(jsonList),
   })
-    .then((response) => response.json())
-    .then((jsonList) => {
-      // console.log(response)
-      if (jsonList.message === "Bin not found") {
-        console.log("error")
-        spinner.hidden = true;
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
       } else {
-        console.log("Success:", jsonList);
-        spinner.hidden = true;
+        throw new Error("Failed to update list:"+ res.status);
       }
+    })
+    .then((jsonList) => {
+      console.log("Success:", jsonList);
+      spinner.hidden = true;
+    })
+    .catch((error) => {
+      console.error(error);
+      spinner.hidden = true;
     });
 }
 
@@ -65,7 +72,7 @@ function updateList() {
 function emptyJsonbin() {
   spinner.hidden = false;
 
-  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce", {
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0c", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -75,10 +82,18 @@ function emptyJsonbin() {
     body: JSON.stringify({ "my-todo": [] }),
   })
     .then((res) => {
-      const promise = res.json();
-      promise.then((res) => {
-        console.log(res.message);
-        spinner.hidden = true;
-      })
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Failed to empty list error:" + res.status);
+      }
+    })
+    .then((res) => {
+      spinner.hidden = true;
+      console.log("items deleted");
+    })
+    .catch((err) => {
+      spinner.hidden = true;
+      console.error(err);
     });
 }

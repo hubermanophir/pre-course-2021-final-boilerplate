@@ -1,20 +1,4 @@
 {
-    "my-todo": [
-        {
-            "text": "bfdbdf",
-            "date": "18/02/2021, 15:51:24",
-            "priority": "1"
-        },
-        {
-            "text": "dsa",
-            "date": "18/02/2021, 15:52:01",
-            "priority": "1"
-        },
-        {
-            "text": "das",
-            "date": "18/02/2021, 15:52:16",
-            "priority": "1"
-        }
-    ],
+    "my-todo": [],
     "id": "6013b6761de5467ca6bdb0ce"
 }
