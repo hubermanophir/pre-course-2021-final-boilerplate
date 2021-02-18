@@ -73,16 +73,3 @@ function emptyJsonbin() {
   });
 }
 
-// //When the page is loaded its content is taken from jsonbin.io and updates the localStorage
-// document.addEventListener("DOMContentLoaded", async (e) => {
-//   let response = await fetch(
-//     "https://api.jsonbin.io/v3/b/6013b6761de5467ca6bdb0ce/latest"
-//   );
-//   let jsonResponse = await response.json();
-//   let objectResponse = jsonResponse["record"];
-//   jsonList = objectResponse;
-//   todoList = jsonList["my-todo"];
-//   counter.innerText = todoList.length;
-//   localStorage.setItem("my-todo", JSON.stringify(todoList));
-//   arrayToDiv(todoList);
-// });
