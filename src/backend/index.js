@@ -1,10 +1,15 @@
 const { json } = require("express");
 const express = require("express");
 const app = express();
-app.use(express.json());
 const PORT = 3000;
 const fs = require("fs");
 const uuid = require("uuid");
+const delay = function (req, res, next) {
+  setTimeout(next, 1000);
+};
+
+app.use(delay);
+app.use(express.json());
 
 //create file with the corresponding id as name
 app.post("/b", (req, res) => {
