@@ -1,3 +1,5 @@
+// const { response } = require("express");
+
 const API_KEY = "$2b$10$5P7RliLTaANiyqYHfkRvWepKYlCjfoARhVbWxxlqCTwQexhfzjuES"; // Assign this variable to your JSONBIN.io API key if you choose to use it.
 const DB_NAME = "my-todo";
 
@@ -27,10 +29,10 @@ document.addEventListener("DOMContentLoaded", (e) => {
         arrayToDiv(todoList);
         spinner.hidden = true;
       })
-      .catch((err) => {
-        console.log(jsonList.message);
-        spinner.hidden = true;
-      });
+      ;
+  }).catch((err) => {
+    console.log(jsonList.message);
+    spinner.hidden = true;
   });
 });
 
@@ -48,12 +50,14 @@ function updateList() {
   })
     .then((response) => response.json())
     .then((jsonList) => {
-      console.log("Success:", jsonList);
-      spinner.hidden = true;
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      spinner.hidden = true;
+      // console.log(response)
+      if (jsonList.message === "Bin not found") {
+        console.log("error")
+        spinner.hidden = true;
+      } else {
+        console.log("Success:", jsonList);
+        spinner.hidden = true;
+      }
     });
 }
 
@@ -69,8 +73,12 @@ function emptyJsonbin() {
         "$2b$10$5P7RliLTaANiyqYHfkRvWepKYlCjfoARhVbWxxlqCTwQexhfzjuES",
     },
     body: JSON.stringify({ "my-todo": [] }),
-  }).then(() => {
-    spinner.hidden = true;
-  });
+  })
+    .then((res) => {
+      const promise = res.json();
+      promise.then((res) => {
+        console.log(res.message);
+        spinner.hidden = true;
+      })
+    });
 }
-

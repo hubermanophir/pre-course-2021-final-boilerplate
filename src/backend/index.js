@@ -59,7 +59,7 @@ app.put("/b/:id", (req, res) => {
   if (!fs.existsSync(`./src/backend/database/${req.params.id}.json`)) {
     res.status(404).send(`{
       "message": "Bin not found"
-    }`);
+    }`)
   } else {
     fs.writeFile(
       `./src/backend/database/${req.params.id}.json`,
