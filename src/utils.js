@@ -74,7 +74,7 @@ function updateList() {
 function emptyJsonbin() {
   spinner.hidden = false;
 
-  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0c", {
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
