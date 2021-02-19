@@ -13,7 +13,13 @@
     />
   </head>
   <body>
-    <div hidden id="error"><p>Please reload page</p></div>
+    <div hidden id="delete-error">
+      <p>There was a server error could not delete items</p>
+    </div>
+    <div hidden id="update-error">
+      <p>There was a server error could not update List</p>
+    </div>
+    <div hidden id="load-error"><p>Could not connect to the server</p></div>
     <div id="spinner">
       <img
         id="spinner-img"

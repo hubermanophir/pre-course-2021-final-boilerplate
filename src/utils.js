@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", (e) => {
     })
     .catch((err) => {
       spinner.hidden = true;
-      errorDiv.hidden =false;
+      loadError.hidden =false;
       console.error(err);
     });
 });
@@ -64,6 +64,7 @@ function updateList() {
       spinner.hidden = true;
     })
     .catch((error) => {
+      updateError.hidden = false;
       console.error(error);
       spinner.hidden = true;
     });
@@ -73,7 +74,7 @@ function updateList() {
 function emptyJsonbin() {
   spinner.hidden = false;
 
-  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0ce", {
+  fetch("http://localhost:3000/b/6013b6761de5467ca6bdb0c", {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -94,6 +95,7 @@ function emptyJsonbin() {
       console.log("items deleted");
     })
     .catch((err) => {
+      deleteError.hidden = false;
       spinner.hidden = true;
       console.error(err);
     });
